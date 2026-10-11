@@ -82,7 +82,7 @@ function ActivityCard({ bucket, curr, prev, go }: {
   const m = BUCKET_META[bucket];
   const tiles = m.distance
     ? [
-        { label: "Distance", value: fmtKm(curr.distanceKm), unit: "km", d: pct(curr.distanceKm, prev.distanceKm) },
+        { label: "Distance", value: fmtKm(curr.distanceKm), unit: "mi", d: pct(curr.distanceKm, prev.distanceKm) },
         { label: "Sessions", value: curr.sessions, unit: "", d: pct(curr.sessions, prev.sessions) },
         { label: "Time", value: (curr.durationS / 3600).toFixed(1), unit: "h", d: pct(curr.durationS, prev.durationS) },
       ]

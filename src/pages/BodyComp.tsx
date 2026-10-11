@@ -153,13 +153,13 @@ export default function BodyComp({ data, refreshed }: { data: Bundle; refreshed?
                    unit="%" verdict="bad"
                    note="The big one. Don't chase this number on the scale." />
               <Row label="Weight" dexa={latestDexa.weight_kg} garmin={paired?.weight_kg ?? null}
-                   unit="kg" digits={2} verdict="good"
+                   unit="lb" digits={2} verdict="good"
                    note="Scales are good at weight. Trust this." />
               <Row label="Muscle / ASM" dexa={latestDexa.asm_kg} garmin={paired?.muscle_mass_kg ?? null}
-                   unit="kg" digits={2} verdict="good"
+                   unit="lb" digits={2} verdict="good"
                    note="Garmin muscle mass vs DEXA appendicular skeletal muscle. Close enough to track." />
               <Row label="Bone" dexa={latestDexa.bone_mineral_content_kg} garmin={paired?.bone_mass_kg ?? null}
-                   unit="kg" digits={2} verdict="warn"
+                   unit="lb" digits={2} verdict="warn"
                    note="Different definitions: DEXA measures mineral content only, Garmin estimates whole bone. Not comparable — watch each on its own trend." />
             </tbody>
           </table>
@@ -172,10 +172,10 @@ export default function BodyComp({ data, refreshed }: { data: Bundle; refreshed?
           <dl className="grid grid-cols-2 gap-3 text-sm">
             {[
               ["Body fat", fmt(latestDexa.body_fat_pct, 1, "%")],
-              ["Fat mass", fmt(latestDexa.fat_mass_kg, 1, " kg")],
-              ["Lean mass", fmt(latestDexa.lean_mass_kg, 1, " kg")],
-              ["Fat-free mass", fmt(latestDexa.fat_free_mass_kg, 1, " kg")],
-              ["ASM", fmt(latestDexa.asm_kg, 1, " kg")],
+              ["Fat mass", fmt(latestDexa.fat_mass_kg, 1, " lb")],
+              ["Lean mass", fmt(latestDexa.lean_mass_kg, 1, " lb")],
+              ["Fat-free mass", fmt(latestDexa.fat_free_mass_kg, 1, " lb")],
+              ["ASM", fmt(latestDexa.asm_kg, 1, " lb")],
               ["ASM / height²", fmt(latestDexa.asm_height2, 1)],
               ["Visceral fat", fmt(latestDexa.vat_area_cm2, 0, " cm²")],
               ["A/G ratio", fmt(latestDexa.ag_ratio, 2)],
@@ -244,9 +244,9 @@ export default function BodyComp({ data, refreshed }: { data: Bundle; refreshed?
                 return (
                   <tr key={w.measured_at} className="border-t border-slate-800/70">
                     <td className="py-2 pr-3 text-slate-300">{w.measured_date}</td>
-                    <td className="py-2 px-3 text-right font-mono text-slate-300">{fmt(w.weight_kg, 2, " kg")}</td>
+                    <td className="py-2 px-3 text-right font-mono text-slate-300">{fmt(w.weight_kg, 2, " lb")}</td>
                     <td className="py-2 px-3 text-right font-mono text-slate-500">{fmt(w.body_fat_pct, 1, "%")}</td>
-                    <td className="py-2 px-3 text-right font-mono text-slate-300">{fmt(w.muscle_mass_kg, 2, " kg")}</td>
+                    <td className="py-2 px-3 text-right font-mono text-slate-300">{fmt(w.muscle_mass_kg, 2, " lb")}</td>
                     <td className="py-2 pl-3 text-right font-mono text-emerald-400">{fmt(corrected, 1, "%")}</td>
                   </tr>
                 );
@@ -276,8 +276,8 @@ export default function BodyComp({ data, refreshed }: { data: Bundle; refreshed?
                 <tr key={s.scan_date} className="border-t border-slate-800/70">
                   <td className="py-2 pr-3 text-slate-300">{s.scan_date}</td>
                   <td className="py-2 px-3 text-right font-mono text-sky-300">{fmt(s.body_fat_pct, 1, "%")}</td>
-                  <td className="py-2 px-3 text-right font-mono text-slate-300">{fmt(s.lean_mass_kg, 1, " kg")}</td>
-                  <td className="py-2 px-3 text-right font-mono text-slate-300">{fmt(s.asm_kg, 1, " kg")}</td>
+                  <td className="py-2 px-3 text-right font-mono text-slate-300">{fmt(s.lean_mass_kg, 1, " lb")}</td>
+                  <td className="py-2 px-3 text-right font-mono text-slate-300">{fmt(s.asm_kg, 1, " lb")}</td>
                   <td className="py-2 pl-3 text-right font-mono text-amber-400">{fmt(s.z_score, 1)}</td>
                 </tr>
               ))}

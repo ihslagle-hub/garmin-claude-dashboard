@@ -72,9 +72,9 @@ export default function Health({ data, now, period, setPeriod, refreshed }: {
       />
 
       <div className="mb-4 grid grid-cols-2 gap-3 md:grid-cols-5">
-        <Stat label="Weight" value={latest?.weight_kg ?? "–"} unit="kg" color={C.weight} delta={pd(prevLatest?.weight_kg, latest?.weight_kg)} deltaGood={false} />
+        <Stat label="Weight" value={latest?.weight_kg ?? "–"} unit="lb" color={C.weight} delta={pd(prevLatest?.weight_kg, latest?.weight_kg)} deltaGood={false} />
         <Stat label="Body fat" value={latest?.body_fat_pct ?? "–"} unit="%" color={C.fat} delta={pd(prevLatest?.body_fat_pct, latest?.body_fat_pct)} deltaGood={false} />
-        <Stat label="Muscle" value={latest?.muscle_mass_kg ?? "–"} unit="kg" color={C.muscle} delta={pd(prevLatest?.muscle_mass_kg, latest?.muscle_mass_kg)} deltaGood />
+        <Stat label="Muscle" value={latest?.muscle_mass_kg ?? "–"} unit="lb" color={C.muscle} delta={pd(prevLatest?.muscle_mass_kg, latest?.muscle_mass_kg)} deltaGood />
         <Stat label="Resting HR" value={latestRhr} unit="bpm" color={C.hr} />
         <Stat label="Sleep avg 7d" value={avgSleep} unit="h" color={C.sleep} />
       </div>
@@ -90,7 +90,7 @@ export default function Health({ data, now, period, setPeriod, refreshed }: {
             </defs>
             <CartesianGrid {...GRID} />
             <XAxis dataKey="date" tick={AXIS_TICK} stroke="#334155" minTickGap={24} />
-            <YAxis domain={["dataMin - 1", "dataMax + 1"]} tickFormatter={(v) => `${Math.round(v)}`} tick={AXIS_TICK} stroke="#334155" unit="kg" width={58} />
+            <YAxis domain={["dataMin - 1", "dataMax + 1"]} tickFormatter={(v) => `${Math.round(v)}`} tick={AXIS_TICK} stroke="#334155" unit="lb" width={58} />
             <Tooltip {...TOOLTIP} />
             <Area type="monotone" dataKey="weight" stroke={C.weight} strokeWidth={2} fill="url(#gw)" dot={{ r: 2 }} name="Weight" isAnimationActive={false} />
             <Line type="monotone" dataKey="trend" stroke="#fff" strokeWidth={1.5} strokeDasharray="4 3" dot={false} name="7-pt trend" isAnimationActive={false} />
@@ -115,7 +115,7 @@ export default function Health({ data, now, period, setPeriod, refreshed }: {
             <LineChart data={weightSeries} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
               <CartesianGrid {...GRID} />
               <XAxis dataKey="date" tick={AXIS_TICK} stroke="#334155" minTickGap={24} />
-              <YAxis domain={["dataMin - 1", "dataMax + 1"]} tickFormatter={(v) => `${Math.round(v)}`} tick={AXIS_TICK} stroke="#334155" unit="kg" width={56} />
+              <YAxis domain={["dataMin - 1", "dataMax + 1"]} tickFormatter={(v) => `${Math.round(v)}`} tick={AXIS_TICK} stroke="#334155" unit="lb" width={56} />
               <Tooltip {...TOOLTIP} />
               <Line type="monotone" dataKey="muscle" stroke={C.muscle} strokeWidth={2} dot={{ r: 2 }} name="Muscle" isAnimationActive={false} />
             </LineChart>

@@ -62,7 +62,7 @@ export default function StepsPage({ data, now, period, setPeriod, refreshed }: {
         <Stat label="Total steps" value={fmtSteps(cur.totalSteps)} color={COLOR} delta={pct(cur.totalSteps, pre.totalSteps)} deltaGood />
         <Stat label="Avg / day" value={cur.avgSteps?.toLocaleString("en-AU") ?? "–"} color={COLOR} delta={pct(cur.avgSteps || 0, pre.avgSteps || 0)} deltaGood />
         <Stat label="Goal days" value={`${cur.goalDays}/${cur.totalDays}`} color={GOAL} delta={pct(cur.goalDays, pre.goalDays)} deltaGood />
-        <Stat label="Distance" value={fmtKm(cur.distanceKm)} unit="km" color={COLOR} delta={pct(cur.distanceKm, pre.distanceKm)} deltaGood />
+        <Stat label="Distance" value={fmtKm(cur.distanceKm)} unit="mi" color={COLOR} delta={pct(cur.distanceKm, pre.distanceKm)} deltaGood />
         <Stat label="Best day" value={fmtSteps(cur.bestDay)} color={COLOR} />
         <Stat label="Floors" value={cur.floors.toLocaleString("en-AU")} color="#fbbf24" delta={pct(cur.floors, pre.floors)} deltaGood />
       </div>

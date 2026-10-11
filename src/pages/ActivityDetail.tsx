@@ -32,16 +32,16 @@ export default function ActivityDetail({ bucket, data, now, period, setPeriod, r
 
   const tiles = m.distance
     ? [
-        { label: "Distance", value: fmtKm(cur.distanceKm), unit: "km", d: pct(cur.distanceKm, pre.distanceKm), good: true },
+        { label: "Distance", value: fmtKm(cur.distanceKm), unit: "mi", d: pct(cur.distanceKm, pre.distanceKm), good: true },
         { label: "Sessions", value: cur.sessions, unit: "", d: pct(cur.sessions, pre.sessions), good: true },
         { label: "Time", value: (cur.durationS / 3600).toFixed(1), unit: "h", d: pct(cur.durationS, pre.durationS), good: true,
           note: cur.indoorDurationS ? `incl. ${Math.round(cur.indoorDurationS / 60)} min indoor` : undefined },
         m.paceStyle === "speed"
           // movingDurationS, NOT durationS -- see the note on Stat. A 0 km indoor
           // ride would otherwise be divided into the outdoor kilometres.
-          ? { label: "Avg speed", value: fmtSpeed(cur.distanceKm * 1000, cur.movingDurationS), unit: "km/h", d: null, good: true,
+          ? { label: "Avg speed", value: fmtSpeed(cur.distanceKm * 1000, cur.movingDurationS), unit: "mph", d: null, good: true,
               note: cur.indoorSessions ? `outdoor only · ${cur.indoorSessions} indoor session${cur.indoorSessions > 1 ? "s" : ""} excluded` : undefined }
-          : { label: "Avg pace", value: fmtPace(cur.distanceKm * 1000, cur.movingDurationS), unit: "/km", d: null, good: false,
+          : { label: "Avg pace", value: fmtPace(cur.distanceKm * 1000, cur.movingDurationS), unit: "/mi", d: null, good: false,
               note: cur.indoorSessions ? `outdoor only · ${cur.indoorSessions} indoor session${cur.indoorSessions > 1 ? "s" : ""} excluded` : undefined },
         { label: "Avg HR", value: cur.avgHr ? Math.round(cur.avgHr) : "–", unit: "bpm", d: null, good: false },
         { label: "Training load", value: Math.round(cur.load), unit: "", d: pct(cur.load, pre.load), good: true },
@@ -82,7 +82,7 @@ export default function ActivityDetail({ bucket, data, now, period, setPeriod, r
       </div>
 
       <div className="mb-4 grid gap-4 lg:grid-cols-2">
-        <ChartCard title="Monthly volume" subtitle={m.distance ? "km + sessions · 12 months" : "hours + sessions · 12 months"}>
+        <ChartCard title="Monthly volume" subtitle={m.distance ? "mi + sessions · 12 months" : "hours + sessions · 12 months"}>
           <ResponsiveContainer width="100%" height={260}>
             <ComposedChart data={months} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
               <CartesianGrid {...GRID} vertical={false} />
@@ -90,7 +90,7 @@ export default function ActivityDetail({ bucket, data, now, period, setPeriod, r
               <YAxis yAxisId="l" tick={AXIS_TICK} stroke="#334155" width={40} />
               <YAxis yAxisId="r" orientation="right" tick={AXIS_TICK} stroke="#334155" width={28} />
               <Tooltip {...TOOLTIP} />
-              <Bar yAxisId="l" dataKey={m.distance ? "km" : "hours"} fill={m.color} radius={[3, 3, 0, 0]} name={m.distance ? "km" : "hours"} isAnimationActive={false} />
+              <Bar yAxisId="l" dataKey={m.distance ? "km" : "hours"} fill={m.color} radius={[3, 3, 0, 0]} name={m.distance ? "mi" : "hours"} isAnimationActive={false} />
               <Line yAxisId="r" type="monotone" dataKey="sessions" stroke="#e2e8f0" strokeWidth={1.5} dot={{ r: 2 }} name="sessions" isAnimationActive={false} />
             </ComposedChart>
           </ResponsiveContainer>
@@ -104,7 +104,7 @@ export default function ActivityDetail({ bucket, data, now, period, setPeriod, r
               <YAxis yAxisId="l" tick={AXIS_TICK} stroke="#334155" width={40} />
               <YAxis yAxisId="r" orientation="right" tick={AXIS_TICK} stroke="#334155" width={32} domain={["dataMin - 8", "dataMax + 8"]} />
               <Tooltip {...TOOLTIP} />
-              <Bar yAxisId="l" dataKey={m.distance ? "km" : "load"} fill={m.color} radius={[2, 2, 0, 0]} name={m.distance ? "km" : "load"} isAnimationActive={false} />
+              <Bar yAxisId="l" dataKey={m.distance ? "km" : "load"} fill={m.color} radius={[2, 2, 0, 0]} name={m.distance ? "mi" : "load"} isAnimationActive={false} />
               <Line yAxisId="r" type="monotone" dataKey="hr" stroke="#f87171" strokeWidth={1.5} dot={false} name="avg HR" connectNulls isAnimationActive={false} />
             </ComposedChart>
           </ResponsiveContainer>
@@ -112,13 +112,13 @@ export default function ActivityDetail({ bucket, data, now, period, setPeriod, r
       </div>
 
       {m.distance && m.paceStyle === "pace" && (
-        <ChartCard title="Pace trend" subtitle="min/km · last 60 sessions · lower is faster" className="mb-4">
+        <ChartCard title="Pace trend" subtitle="min/mi · last 60 sessions · lower is faster" className="mb-4">
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={recent} margin={{ top: 8, right: 8, left: -10, bottom: 0 }}>
               <CartesianGrid {...GRID} />
               <XAxis dataKey="date" tick={AXIS_TICK} stroke="#334155" minTickGap={28} />
               <YAxis reversed tick={AXIS_TICK} stroke="#334155" width={44} tickFormatter={(v) => `${Math.floor(v)}:${Math.round((v % 1) * 60).toString().padStart(2, "0")}`} />
-              <Tooltip {...TOOLTIP} formatter={(v: number) => [`${Math.floor(v)}:${Math.round((v % 1) * 60).toString().padStart(2, "0")} /km`, "pace"]} />
+              <Tooltip {...TOOLTIP} formatter={(v: number) => [`${Math.floor(v)}:${Math.round((v % 1) * 60).toString().padStart(2, "0")} /mi`, "pace"]} />
               <Line type="monotone" dataKey="paceVal" stroke={m.color} strokeWidth={2} dot={{ r: 2 }} connectNulls isAnimationActive={false} />
             </LineChart>
           </ResponsiveContainer>

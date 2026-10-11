@@ -159,7 +159,7 @@ async function fromSupabase(table: string, order: string): Promise<any[]> {
   }
 }
 
-export async function loadData(): Promise<LoadResult> {
+async function loadDataRaw(): Promise<LoadResult> {
   // 1) Production: the gated proxy.
   try {
     const r = await fetch("/api/data", { credentials: "same-origin" });
@@ -240,4 +240,25 @@ export function recent<T extends { [k: string]: any }>(rows: T[], key: string, d
   const cutoff = new Date(rows[rows.length - 1][key]);
   cutoff.setDate(cutoff.getDate() - days);
   return rows.filter((r) => new Date(r[key]) >= cutoff);
+}
+
+// Display units: miles, feet, pounds (Supabase stays metric)
+const MI = 1.609344, LB = 2.20462, FT = 3.28084;
+const r2 = (x: number) => Math.round(x * 100) / 100;
+const conv = (o: any, keys: string[], f: (x: number) => number) => {
+  const out = { ...o };
+  for (const k of keys) if (typeof out[k] === "number") out[k] = f(out[k]);
+  return out;
+};
+export async function loadData(): Promise<LoadResult> {
+  const b = await loadDataRaw();
+  if ("needLogin" in b) return b;
+  const lb = (x: number) => r2(x * LB);
+  return {
+    ...b,
+    activities: b.activities.map((a) => conv(conv(a, ["distance_m"], (x) => x / MI), ["elevation_gain_m"], (x) => x * FT)),
+    daily: b.daily.map((d) => conv(d, ["distance_m"], (x) => x / MI)),
+    weighIns: b.weighIns.map((w) => conv(w, ["weight_kg", "muscle_mass_kg", "bone_mass_kg"], lb)),
+    dexa: b.dexa.map((s) => conv(s, ["weight_kg", "fat_mass_kg", "lean_mass_kg", "fat_free_mass_kg", "bone_mineral_content_kg", "asm_kg"], lb)),
+  };
 }

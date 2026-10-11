@@ -87,9 +87,10 @@ export const loadBundle = () => (isLive() ? liveBundle() : Promise.resolve(sampl
 
 export async function liveBundle() {
   const b = await liveBundleRaw();
-  const [plan, planMeta] = await Promise.all([
+  const [plan, planMeta, planDays] = await Promise.all([
     sbGet("training_plan", "week_start.asc").catch(() => []),
     sbGet("training_plan_meta", "id.asc").catch(() => []),
+    sbGet("training_plan_days", "day.asc").catch(() => []),
   ]);
-  return { ...b, plan, planMeta };
+  return { ...b, plan, planMeta, planDays };
 }

@@ -69,7 +69,7 @@ export async function sbGet(table, order) {
   }
 }
 
-export async function liveBundle() {
+async function liveBundleRaw() {
   const [weighIns, activities, sleep, daily, dexa, bloods] = await Promise.all([
     sbGet("garmin_weigh_ins", "measured_date.asc"),
     sbGet("garmin_activities", "activity_date.asc"),
@@ -84,3 +84,12 @@ export async function liveBundle() {
 }
 
 export const loadBundle = () => (isLive() ? liveBundle() : Promise.resolve(sampleBundle()));
+
+export async function liveBundle() {
+  const b = await liveBundleRaw();
+  const [plan, planMeta] = await Promise.all([
+    sbGet("training_plan", "week_start.asc").catch(() => []),
+    sbGet("training_plan_meta", "id.asc").catch(() => []),
+  ]);
+  return { ...b, plan, planMeta };
+}

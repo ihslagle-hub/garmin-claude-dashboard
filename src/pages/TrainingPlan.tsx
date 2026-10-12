@@ -1,4 +1,5 @@
 import WeekDetail from "./WeekDetail";
+import WeekDetail from "./WeekDetail";
 import { useMemo } from "react";
 import type { Bundle } from "../lib/data";
 import { ACTIVITY_BUCKETS, BUCKET_META, fmtKm } from "../lib/metrics";
@@ -89,6 +90,7 @@ export default function TrainingPlan({ data, now, refreshed }: { data: Bundle; n
         </Card>
       )}
 
+        {rows.length > 0 ? <WeekDetail rows={rows} days={(data as any).planDays ?? []} defaultWeek={shown?.week_start ?? rows[0].week_start} /> : null}
         {rows.length > 0 ? <WeekDetail rows={rows} days={(data as any).planDays ?? []} defaultWeek={shown?.week_start ?? rows[0].week_start} /> : null}
       {!!adh.length && (
         <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">

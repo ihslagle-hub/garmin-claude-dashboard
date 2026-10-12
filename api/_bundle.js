@@ -91,6 +91,7 @@ export async function liveBundle() {
     sbGet("training_plan", "week_start.asc").catch(() => []),
     sbGet("training_plan_meta", "id.asc").catch(() => []),
     sbGet("training_plan_days", "day.asc").catch(() => []),
+    sbGet("training_plan_days", "day.asc").catch(() => []),
   ]);
   return { ...b, plan, planMeta, planDays };
 }

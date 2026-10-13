@@ -1,3 +1,4 @@
+import ThisWeekCard from "./ThisWeekCard";
 import { useMemo } from "react";
 import {
   Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis,
@@ -42,6 +43,7 @@ export default function Overview({ data, now, go, period, setPeriod, refreshed }
         refreshed={refreshed}
         right={<PeriodMenu value={period} onChange={setPeriod} />}
       />
+      <ThisWeekCard rows={(data as any).plan ?? []} days={(data as any).planDays ?? []} now={now} />
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {cards.map(({ bucket, curr, prevStat }) =>

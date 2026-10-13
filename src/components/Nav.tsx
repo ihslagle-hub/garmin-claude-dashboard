@@ -22,7 +22,6 @@ export const NAV_SECTIONS: { heading?: string; items: NavItem[] }[] = [
   },
   { heading: "Recovery", items: [{ path: "/recovery", label: "Recovery", icon: "🌙", color: "#38bdf8" }] },
   { heading: "Plan", items: [
-    { path: "/race", label: "Race Plan", icon: "🏁", color: "#fbbf24" },
     { path: "/plan", label: "Training Plan", icon: "🎯", color: "#34d399" },
   ] },
 ];

@@ -9,7 +9,6 @@ import ActivityDetail from "./pages/ActivityDetail";
 import SleepPage from "./pages/SleepPage";
 import StepsPage from "./pages/StepsPage";
 import TrainingPlan from "./pages/TrainingPlan";
-import RacePlan from "./pages/RacePlan";
 import Recovery from "./pages/Recovery";
 import BodyComp from "./pages/BodyComp";
 import Bloods from "./pages/Bloods";
@@ -85,7 +84,6 @@ function Page({ route, data, now, go, period, setPeriod, refreshed }: {
   if (route === "/body") return <BodyComp data={data} refreshed={refreshed} />;
   if (route === "/bloods") return <Bloods data={data} refreshed={refreshed} />;
   if (route === "/plan") return <TrainingPlan data={data} now={now} refreshed={refreshed} />;
-  if (route === "/race") return <RacePlan now={now} refreshed={refreshed} />;
 
   const m = route.match(/^\/activity\/(\w+)$/);
   if (m) {

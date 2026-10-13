@@ -149,7 +149,7 @@ export function adherence(plan: TrainingPlan, activities: Activity[], daily: Dai
 
     // walking is a daily steps target, not logged sessions
     if (bucket === "walking") {
-      const days = daily.filter((d) => new Date(d.summary_date) >= start && d.total_steps != null);
+      const days = daily.filter((d) => new Date(d.summary_date + "T00:00:00") >= start && d.total_steps != null);
       const avg = days.length ? Math.round(days.reduce((a, d) => a + (d.total_steps || 0), 0) / days.length) : 0;
       const ratio = t.stepsPerDay > 0 ? avg / t.stepsPerDay : 0;
       const status: Adherence["status"] = ratio >= 1 ? "ahead" : ratio >= 0.85 ? "ontrack" : "behind";
@@ -157,7 +157,7 @@ export function adherence(plan: TrainingPlan, activities: Activity[], daily: Dai
       continue;
     }
 
-    const week = activitiesIn(activities, bucket).filter((a) => new Date(a.activity_date) >= start);
+    const week = activitiesIn(activities, bucket).filter((a) => new Date(a.activity_date + "T00:00:00") >= start);
     const s = aggregate(week);
     const actualKm = +s.distanceKm.toFixed(1);
     const actualMin = Math.round(s.durationS / 60);

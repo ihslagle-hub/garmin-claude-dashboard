@@ -239,7 +239,8 @@ function AdherenceCard({ row, pace }: { row: ReturnType<typeof adherence>[number
   );
 }
 
-export default function TrainingPlan({ data, now, refreshed }: { data: Bundle; now: Date; refreshed?: string }) {
+export default function TrainingPlan({ data, refreshed }: { data: Bundle; now?: Date; refreshed?: string }) {
+  const now = new Date();
   const rows = ((data as any).plan ?? []) as Wk[];
   const days = ((data as any).planDays ?? []) as Day[];
   const meta = (((data as any).planMeta ?? []) as Meta[])[0];

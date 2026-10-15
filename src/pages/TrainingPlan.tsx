@@ -1,3 +1,4 @@
+import BaselinePanel from "./BaselinePanel";
 import { useMemo, useState } from "react";
 import type { Bundle } from "../lib/data";
 import { ACTIVITY_BUCKETS, BUCKET_META, fmtKm } from "../lib/metrics";
@@ -306,6 +307,7 @@ export default function TrainingPlan({ data, refreshed }: { data: Bundle; now?: 
         </Card>
       )}
 
+      <BaselinePanel races={(data as any).pastRaces ?? []} vo2={(data as any).vo2 ?? []} preds={(data as any).preds ?? []} activities={data.activities as any[]} planDays={days} weeks={rows} goalDate={meta?.goal_date ?? null} now={now} />
       {!!adh.length && (
         <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {adh.map((r) => <AdherenceCard key={r.bucket} row={r} pace={pace} />)}
